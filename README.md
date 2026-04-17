@@ -17,7 +17,8 @@ The license is included the third_party_license.txt. The file hankel_transform.m
 computed the fundamental solution. 
 
 Once the data for the far field operator is obtained, the file FactorizationMethod.m computes the
-indicator function W from the far field data, and plots the reconstruction results. 
+indicator function W from the far field data, and plots the reconstruction results. The indicator
+function W is saved in a 'FM.mat' file.
 
 Under the far_field_data folder, one can find pre-computed far field data for the 'boomerang' 
 shape inhomogeneity and the 'cercle+rectangle' inhomogeneity. 
