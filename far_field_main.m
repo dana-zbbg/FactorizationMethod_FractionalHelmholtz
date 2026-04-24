@@ -42,8 +42,8 @@ inhom = @(x,y) 10*(((c*x + 2*a/c*y.^2).^2+y.^2 ) <= c^2);
 
 
 %% inhomogeneity
-F = inhom(X, X');
-mask = abs(F) > 1e-16;
+InhomMat = inhom(X, X');
+mask = abs(InhomMat) > 1e-16;
 [y_support, x_support] = find(mask);
 nb_support = numel(x_support);
 
@@ -89,7 +89,7 @@ pcolor(real(FarFieldFF), EdgeColor="none");
 colorbar;
 xlabel("angle")
 ylabel("Far Field")
-title("k=20, far field for a small inhomogeneity, s = "+ num2str(s));
+title("k="+num2str(k)+", far field for a small inhomogeneity, s = "+ num2str(s));
 filename = sprintf('farfield_matrix.png');
 exportgraphics(hFig, filename, 'Resolution', 300);
 clf(hFig);
