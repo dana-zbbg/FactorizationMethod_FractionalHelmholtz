@@ -100,21 +100,18 @@ function  [F,M,Gsh] = LippmannSchwingerMatrix_assemble(s,k,h,Nx,xmax, X, inhom, 
     tic
     [xi_ind, yi_ind, xj_ind, yj_ind, xi,yi,xj, yj]=deal(1);
     indexG = 0;
+    InhomMat = inhom(X, X');
     for p1=1:nb_support
         for p2=1:nb_support
-            xi_ind = x_support(p1);%support(p1,2);
-            yi_ind = y_support(p1);%support(p1,3);
-            xj_ind = x_support(p2);%mod(support(p2)-1,Nx)+1;
-            yj_ind = y_support(p2);%floor((support(p2) - xj_ind)/Nx) + 1;
-            
-            xi = X(xi_ind);
-            yi = X(yi_ind);
-            xj = X(xj_ind);
-            yj = X(yj_ind);
+            xi = X(x_support(p1));
+            yi = X(y_support(p1));
+            xj = X(x_support(p2));
+            yj = X(y_support(p2));
+
             %dist between (xi,yi) and (xj, yj)
-            r = sqrt((xi-xj)^2+(yi-yj)^2); %at most sqrt(2)*(2Nx-1)
+            r = sqrt((xi-xj)^2+(yi-yj)^2); %at most sqrt(2)*2*xmax
             indexG = floor(r/h0)+1;
-            M(p1,p2) = -k^(2*s)*Gsh(indexG)*h^2*inhom(xj,yj)*h^2;
+            M(p1,p2) = -k^(2*s)*Gsh(indexG)*h^2*InhomMat(y_support(p2), x_support(p2));%inhom(xj,yj);
             if p1 == p2
                M(p1,p2) = M(p1,p2) + 1;
             end
@@ -134,7 +131,7 @@ function  [F,M,Gsh] = LippmannSchwingerMatrix_assemble(s,k,h,Nx,xmax, X, inhom, 
             
             xj = X(xj_ind);
             yj = X(yj_ind);
-            F(a,p2) = k^2/s*inc(a1,a2,xj,yj)*h^2*inhom(xj,yj);
+            F(a,p2) = k^2/s*inc(a1,a2,xj,yj)*h^2*InhomMat(yj_ind, xj_ind);%inhom(xj,yj);
         end
     end
 
