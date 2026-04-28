@@ -80,7 +80,7 @@ function  [F,M,Gsh] = LippmannSchwingerMatrix_assemble(s,k,h,Nx,xmax, X, inhom, 
     if s <= 0.5
         for j=0:(m-1)
             Gsh(1) = Gsh(1) + k^(2*s*j)*gamma(1-s*(j+1))/(4^(s*(j+1))*...
-            s*(j+1)*gamma(s*(j+1)))*(0.5*h)^(2*s*(j+1));
+            s*(j+1)*gamma(s*(j+1)))*(0.5*h)^(2*s*(j+1))*h^(-2);
         end
     end
     time_green = toc;
